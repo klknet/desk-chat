@@ -132,7 +132,6 @@
                 recMsg.push(m)
                 //有新消息时更新会话列表，不用请求服务器
                 this.updateConversation(m, sendToMe)
-                this.scrollToEnd()
                 if (sendToMe) {
                     // vm.flash()
                 }
@@ -237,8 +236,12 @@
                 }
                 this.$store.commit('selectConversation', 0)
             },
-            scrollToEnd: function () {
-
+            notifyRead(conversation) {
+                let path = '/msg/notifyReaded?userId=' + this.user.userId + '&destId=' + this.chatPerson.destId
+                if (conversation.unreadCount && conversation.unreadCount > 0) {
+                    axios.get(path)
+                    conversation.unreadCount = 0
+                }
             },
             formatDate: function (c) {
                 let curM = moment(c), copyM = moment(c)

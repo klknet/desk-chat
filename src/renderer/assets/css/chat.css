@@ -1,0 +1,209 @@
+.right {
+    width: calc(100% - 250px - 60px);
+    min-width: 300px;
+    background-color: #F5F5F5;
+    float: left;
+    height: 100vh;
+}
+.chat-person {
+    font-size: 1.2em;
+    height: 60px;
+    font-weight: bold;
+    line-height: 70px;
+    position: relative;
+    border-bottom: solid 1px #e7e7e7;
+    z-index: 666;
+}
+
+.chat-person span{
+    margin-left: 30px;
+}
+
+.myself, .myself-content {
+    float: right;
+}
+
+.other-person, .other-person-content {
+    float: left;
+}
+
+.myself img, .other-person img {
+    width: 35px;
+}
+
+.chat-area {
+    height: calc(100vh - 146px - 60px);
+    overflow-y: auto;
+    font-size: 14px;
+}
+
+.chat-area .more-info span {
+    color: #2C90FC;
+    font-size: 0.8em;
+    cursor: pointer;
+}
+
+.chat-area .more-info {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.chat-area li {
+    padding: 8px 30px;
+}
+
+.chat-area .oldest-time-area {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.chat-area .oldest-time-area .oldest-time {
+    background-color: #DADADA;
+    padding: 2px 4px;
+    color: #FFFFFF;
+    font-size: 0.9em;
+}
+
+.clear {
+    clear: both;
+}
+
+span.myself {
+    background-color: #9EEA6A;
+    margin-right: 10px;
+}
+
+span.other-person {
+    margin-left: 10px;
+    background-color: #ffffff;
+}
+
+a.myself-content, a.other-person-content {
+    position: relative;
+}
+
+a.myself-content {
+    margin-right: 10px
+}
+
+a.other-person-content {
+    margin-left: 10px;
+}
+
+a.myself-content img, a.other-person-content img {
+    max-width: 250px
+}
+
+span.myself:after, a.myself-content:after, span.other-person:before, a.other-person-content:before {
+    width: 0;
+    height: 0;
+    border: 4px solid transparent;
+    position: absolute;
+    top: 6px;
+    content: ""
+}
+
+span.other-person:before, a.other-person-content:before {
+    border-right-color: #FFFFFF;
+    right: 100%;
+}
+
+a.other-person-content:before {
+    border-right-color: #000000;
+}
+
+.chat-area div.img-msg {
+    position: relative;
+}
+
+span.myself:after, a.myself-content:after {
+    border-left-color: #9EEA6A;
+    left: 100%;
+}
+
+a.myself-content:after {
+    border-left-color: #000000;
+}
+
+span.myself, span.other-person {
+    padding: 5px 10px;
+    line-height: 25px;
+    font-weight: 500;
+    position: relative;
+    max-width: 60%;
+    word-break: break-all;
+    border: solid 1px #E7E7E7;
+    border-radius: 3px;
+}
+
+span.other-person:hover {
+    background-color: #F6F6F6;
+}
+
+span.myself:hover {
+    background-color: #98E165;
+}
+
+.send-area {
+    background-color: #ffffff;
+    height: 146px;
+    position: relative;
+    border-top: solid 1px #e7e7e7;
+    z-index: 666;
+}
+
+.content-area {
+    padding: 0 30px;
+}
+
+.send-area .content {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 115px;
+}
+
+.menu-area {
+    height: 20px;
+    margin: 5px 0;
+}
+
+.menu-item {
+    position: relative;
+}
+
+.menu-area img {
+    width: 20px;
+}
+
+.content textarea {
+    border: none;
+    width: 100%;
+    height: 80%;
+    resize: none;
+    font-size: 14px;
+}
+
+.content .img-area li img {
+}
+
+.content .img-area ul, .content .img-area li, .content .img-area {
+    display: inline;
+}
+
+.send-btn {
+    padding: 5px 8px;
+    position: absolute;
+    bottom: 10px;
+    right: 25px;
+    border: 0;
+    background-color: #F5F5F5;
+}
+
+.send-btn span {
+    font-size: 13px;
+}
+
+.send-btn:hover {
+    background-color: #129611;
+    color: #FFFFFF;
+}

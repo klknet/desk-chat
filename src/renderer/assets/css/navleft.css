@@ -1,0 +1,30 @@
+.left {
+    width: 60px;
+    background-color: rgb(40, 40, 41);
+    text-align: center;
+    height: 100vh;
+    position: relative;
+    float: left;
+}
+
+.left ul li {
+    margin-top: 20px;
+}
+
+.left ul li:hover {
+    cursor: pointer;
+}
+
+.left ul li img {
+    width: 29px;
+}
+
+#profile {
+    width: 35px;
+}
+
+#settings {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+}

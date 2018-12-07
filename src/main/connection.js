@@ -9,9 +9,9 @@ const client = {
         certificate: ''
     },
     conn: null,
-    host: '39.106.133.40',
     imgPrefix: 'http://39.106.133.40',
-    // host: 'localhost',
+    // host: '39.106.133.40',
+    host: 'localhost',
     chat_port: '8090',
     loginFlag: false,//登录标识
     ping: function () {

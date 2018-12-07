@@ -120,6 +120,6 @@
 </script>
 
 <style>
-    @import "../assets/css/conversation.css";
+    @import "/static/css/conversation.css";
 
 </style>

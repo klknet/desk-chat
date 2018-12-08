@@ -11,3 +11,4 @@ thumbs.db
 !.gitkeep
 vcs.xml
 workspace.xml
+.idea/*

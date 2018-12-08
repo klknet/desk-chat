@@ -31,6 +31,9 @@
     let map = [
             ["p1", "p1-1"], ["p2", "p2-1"], ["p3", "p3-1"]
         ]
+    let link = [
+        {name: 'chat'}, {name: 'contacts'}, {name: 'collect'}
+    ]
     export default {
         name: 'nav-left',
         computed: mapState({
@@ -43,6 +46,7 @@
             }
         },
         created: function () {
+            this.$router.push(link[0])
             this.userProfile()
         },
         methods: {
@@ -51,6 +55,7 @@
             },
             select(i) {
                 this.p = i
+                this.$router.push(link[i])
             },
             userProfile() {
                 let url = 'user/profile?userId=' + client.user.userId
@@ -63,5 +68,5 @@
 </script>
 
 <style>
-    @import "../../../static/css/navleft.css";
+    @import "/static/css/navleft.css";
 </style>

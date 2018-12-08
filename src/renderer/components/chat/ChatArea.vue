@@ -69,11 +69,11 @@
 </template>
 
 <script>
-    import axios from '../../common/request'
+    import axios from '../../../common/request'
     import {mapState} from 'vuex'
-    import message_pb from '../../common/message_pb'
-    import msgBuilder from '../../common/message_builder'
-    import dispatcher from '../dispatcher'
+    import message_pb from '../../../common/message_pb'
+    import msgBuilder from '../../../common/message_builder'
+    import dispatcher from '../../dispatcher'
     import fs from 'fs'
     import moment from 'moment'
     import lodash from 'lodash'

@@ -40,7 +40,7 @@
 </template>
 
 <script>
-    import axios from '../../common/request'
+    import axios from '../../../common/request'
     import {mapState} from 'vuex'
     import {remote} from 'electron'
 

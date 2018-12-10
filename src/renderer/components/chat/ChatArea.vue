@@ -110,7 +110,6 @@
         },
         created: function() {
             dispatcher.processChat = response => {
-                console.log('chatarea process')
                 let chat = response.getChat()
                 let decoder = new TextDecoder('utf8')
                 let m = {

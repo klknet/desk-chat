@@ -1,4 +1,5 @@
 import msgBuilder from '../common/message_builder'
+import config from '../config/settings'
 import net from 'net'
 
 const client = {
@@ -10,8 +11,7 @@ const client = {
     },
     conn: null,
     imgPrefix: 'http://39.106.133.40',
-    // host: '39.106.133.40',
-    host: 'localhost',
+    host: config.host,
     chat_port: '8090',
     loginFlag: false,//登录标识
     ping: function () {

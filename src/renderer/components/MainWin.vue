@@ -42,5 +42,5 @@
 </script>
 
 <style>
-    @import '/static/css/main.css'
+    @import url('~@/assets/css/main.css');
 </style>

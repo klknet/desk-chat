@@ -15,7 +15,7 @@
 
             <li>
                 <a>
-                    <img id="settings" src="/static/img/p4.png">
+                    <img id="settings" src="static/img/p4.png">
                 </a>
             </li>
         </ul>
@@ -26,6 +26,7 @@
     import {mapState} from 'vuex'
     import axios from '../../common/request'
     import {remote} from 'electron'
+
 
     const client = remote.getGlobal('sharedObject').client
     let map = [
@@ -51,7 +52,7 @@
         },
         methods: {
             format(m, i) {
-                return "/static/img/" + m[i == this.p ? 0 : 1] + ".png"
+                return "static/img/" + m[i == this.p ? 0 : 1] + ".png"
             },
             select(i) {
                 this.p = i
@@ -68,5 +69,5 @@
 </script>
 
 <style>
-    @import "/static/css/navleft.css";
+    @import url("./../assets/css/navleft.css");
 </style>

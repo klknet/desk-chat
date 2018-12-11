@@ -43,10 +43,10 @@
                 <div class="content-area">
                     <div class="menu-area">
                         <span class="menu-item">
-                            <img @click="propFile" src="/static/img/file.png">
+                            <img @click="propFile" src="static/img/file.png">
                         </span>
                         <span class="menu-item videa-chat">
-                            <img  src="/static/img/video.png">
+                            <img  src="static/img/video.png">
                         </span>
                     </div>
                     <div class="content" @keydown.delete="clearMsg" @paste.prevent="pasteImg" v-on:keydown.enter.prevent="sendMsg">
@@ -266,6 +266,6 @@
 </script>
 
 <style>
-    @import "/static/css/chat.css";
+    @import "./../../assets/css/chat.css";
 
 </style>

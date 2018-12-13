@@ -12,7 +12,8 @@ instance.interceptors.response.use(res => {
     //     persist.logout();
     //     window.location.reload();
     // }
-    console.log(err.response.data)
+    if(err.response)
+        console.log(err.response.data)
 });
 
 export default instance;

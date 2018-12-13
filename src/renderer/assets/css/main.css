@@ -59,9 +59,10 @@ input, select, option, textarea, button {
 .right {
     width: calc(100% - 250px - 60px);
     min-width: 300px;
-    background-color: #F5F5F5;
     float: left;
     height: 100vh;
+    background: #F5F5F5 url("/static/img/wechat.png") no-repeat center;
+    background-size: 93px;
 }
 
 .search {

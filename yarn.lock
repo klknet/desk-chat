@@ -5518,6 +5518,11 @@ js-base64@^2.1.9:
   resolved "http://registry.npm.taobao.org/js-base64/download/js-base64-2.4.9.tgz#748911fb04f48a60c4771b375cac45a80df11c03"
   integrity sha1-dIkR+wT0imDEdxs3XKxFqA3xHAM=
 
+js-pinyin@^0.1.9:
+  version "0.1.9"
+  resolved "http://registry.npm.taobao.org/js-pinyin/download/js-pinyin-0.1.9.tgz#cdf19335645ddb20d4630df1058aac25d256adfd"
+  integrity sha1-zfGTNWRd2yDUYw3xBYqsJdJWrf0=
+
 js-string-escape@~1.0.0:
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/js-string-escape/download/js-string-escape-1.0.1.tgz#e2625badbc0d67c7533e9edc1068c587ae4137ef"

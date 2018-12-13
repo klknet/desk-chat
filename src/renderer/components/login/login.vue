@@ -37,7 +37,7 @@
             {text: '孔令凯', value: '18062743820', pwd: 'konglk'},
             {text: '秦田', value: '18062742155', pwd: 'qintian'},
             {text: '毛毛', value: '18510396861', pwd: 'maomao'},
-            {text: '点点', value: '13477907301', pwd: 'diandian'}
+            // {text: '点点', value: '13477907301', pwd: 'diandian'}
         ]
     }
 

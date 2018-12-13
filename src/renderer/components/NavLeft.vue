@@ -26,6 +26,8 @@
     import {mapState} from 'vuex'
     import axios from '../../common/request'
     import {remote} from 'electron'
+    import pinyin from 'js-pinyin'
+    import lodash from 'lodash'
 
 
     const client = remote.getGlobal('sharedObject').client
@@ -61,6 +63,9 @@
             userProfile() {
                 let url = 'user/profile?userId=' + client.user.userId
                 axios.get(url).then(res => {
+                    res.data.friends.forEach(f => f.firstLetter = pinyin.getCamelChars(f.notename).charAt(0))
+                    let groupFriend = lodash.groupBy(res.data.friends, friend => friend['firstLetter'])
+                    res.data.groupFriend = groupFriend
                     this.$store.commit('userProfile', res.data)
                 })
             }

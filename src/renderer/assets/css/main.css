@@ -61,7 +61,7 @@ input, select, option, textarea, button {
     min-width: 300px;
     float: left;
     height: 100vh;
-    background: #F5F5F5 url("/static/img/wechat.png") no-repeat center;
+    background: #F5F5F5 url("./../img/wechat.png") no-repeat center;
     background-size: 93px;
 }
 

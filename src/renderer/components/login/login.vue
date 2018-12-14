@@ -89,11 +89,4 @@
     .login .row{
         padding-top: 30px;
     }
-    .login-btn{
-        background-color: #1AAD19;
-        color:#ffffff;
-        width:100px;
-        padding:10px;
-        text-align: center;
-    }
 </style>

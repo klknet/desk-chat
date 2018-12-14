@@ -8,25 +8,25 @@
             </div>
             <div class="friend non-drag">
                 <div class="contact-group">
-                    <div class="group-title new-friend">
+                    <div class="group-title first">
                         <span>新的朋友</span>
                     </div>
                     <div class="group-content">
                         <ul>
-                            <li @click="select(map[newFriendKey])" :class="{active: s === map[newFriendKey]}">
+                            <li @click="select(map[newFriendKey], newFriendKey)" :class="{active: s === map[newFriendKey]}">
                                 <img class="avatar" src="static/img/newfriend.png"/>
                                 <span class="notation">新的朋友</span>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div class="contact-group friend-group" v-for="key in Object.keys(user.groupFriend)">
+                <div class="contact-group friend-group" v-for="(value,key) in user.groupFriend">
                     <div class="group-title">
                         <span>{{key}}</span>
                     </div>
                     <div class="group-content">
                         <ul>
-                            <li v-for="(friend, index) in user.groupFriend[key]" @click="select(map[friend.userId])"
+                            <li v-for="(friend, index) in value" @click="select(map[friend.userId], index)"
                                 :class="{active: s === map[friend.userId]}">
                                 <img :src="friend.imgUrl" class="avatar"/>
                                 <span class="notation">{{friend.notename}}</span>
@@ -37,9 +37,7 @@
             </div>
         </div>
         <div class="right">
-            <div>
-
-            </div>
+            <router-view></router-view>
         </div>
     </div>
 </template>
@@ -67,12 +65,18 @@
             return {
                 s: -1,
                 map: {},
-                newFriendKey: 'new_friend_key'
+                newFriendKey: 'new_friend_key',
             }
         },
         methods: {
-            select(i) {
-                this.s = i
+            select(curI, index) {
+                this.s = curI
+                if(index >= 0) {
+                    this.$router.push({path:'/contacts/friend-info/'+index})
+                }
+                else if(index === this.newFriendKey){
+                    this.$router.push({path:'/contacts/new-friend/'+index})
+                }
             }
         }
     }
@@ -92,12 +96,12 @@
         color: #999999;
     }
 
-    .new-friend {
+    .friend .first {
         font-size: 0.8em;
         font-weight: 600;
     }
 
-    .friend-group {
+    .contact-group:not(:first-child) {
         border-top: solid 1px #DAD9D9;
     }
 
@@ -119,7 +123,5 @@
         width: 35px;
     }
 
-    .notation {
 
-    }
 </style>

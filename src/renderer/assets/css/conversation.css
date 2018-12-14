@@ -1,18 +1,18 @@
 
-.nickname {
+.conversations .nickname {
     position: absolute;
     font-weight: 500;
     color: #000000;
     top: 10px;
 }
 
-.last-date {
+.conversations .last-date {
     color: #999999;
     float: right;
     font-size: 0.7em;
 }
 
-.last-msg {
+.conversations .last-msg {
     position: absolute;
     bottom: 10px;
     color: #999999;
@@ -23,7 +23,7 @@
     text-overflow: ellipsis;
 }
 
-.nickname, .last-msg {
+.conversations .nickname, .conversations .last-msg {
     left: 55px;
 }
 

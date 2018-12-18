@@ -34,6 +34,7 @@ let msg_builder = {
         chat.setUserid(chatMsg.userId)
         chat.setChattype(message_pb.CPrivateChat.ChatType.ONE2ONE)
         chat.setDatatype(chatMsg.dataType)
+        chat.setConversationid(chatMsg.conversationId)
         req.setChat(chat)
         message.setRequest(req)
         let bytes = message.serializeBinary()

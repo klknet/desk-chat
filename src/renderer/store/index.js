@@ -8,7 +8,7 @@ const store = new vuex.Store({
             imgUrl: '',
             nickname: ''
         },//登录用户
-        conversations: [],//会话列表
+        // conversations: [],//会话列表
         conversationMap: {},//存储每个会话相关的信息,
         chatPerson: {},//聊天对象
         messages: [],
@@ -25,10 +25,7 @@ const store = new vuex.Store({
             Object.assign(state.conversationMap, map)
         },
         chatPerson(state, conversation) {
-            // Object.assign(state.chatPerson, person)
-            state.chatPerson.destId = conversation.destId;
-            state.chatPerson.imgUrl = conversation.imgUrl;
-            state.chatPerson.nickname = conversation.nickname;
+            Object.assign(state.chatPerson, conversation)
         },
         showMessage(state, messages) {
             state.messages = messages

@@ -42,6 +42,8 @@
 
 <script>
     import {mapState} from 'vuex'
+    import axios from '../../../common/request'
+    import func from './../../util/func'
 
     export default {
         name: 'friend-info',
@@ -58,7 +60,21 @@
         },
         methods: {
             sendMessage() {
-
+                let userId = this.friend.userId
+                for(let i in this.user.conversations) {
+                    if(this.user.conversations[i].userId == userId)
+                    console.log('已存在的会话')
+                    this.$router.push({name:'chat'})
+                    return
+                }
+                let data = new FormData()
+                data.set('userId', this.user.userId)
+                data.set('destId', userId)
+                axios.post('conversation/create', data,
+                    {headers: { 'Content-Type': 'application/x-www-form-urlencoded' }}).then(res => {
+                    func.groupFriend(res.data)
+                    this.$store.commit('userProfile', res.data)
+                })
             }
         }
     }

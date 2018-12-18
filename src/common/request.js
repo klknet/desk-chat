@@ -4,6 +4,7 @@ import config from '../config/settings';
 const instance = axios.create();
 instance.defaults.timeout = config.timeout;
 instance.defaults.baseURL = config.baseURL;
+// instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 instance.interceptors.response.use(res => {
     return res;

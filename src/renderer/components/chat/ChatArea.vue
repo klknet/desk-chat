@@ -3,19 +3,19 @@
         <!--聊天窗口-->
         <div>
             <div class="chat-person drag">
-                <span>{{chatPerson.nickname}}</span>
+                <span>{{chatPerson.notename}}</span>
             </div>
             <div class="chat-area" id="chat-area" @scroll.passive="scrollEvent">
                 <ul>
                     <li v-for="(message,index) in messages">
                         <div v-if="index==0" class="more-info">
-                            <span @click="showMore">查看更多消息</span>
+                            <span @click="showMore" v-show="showMoreFlag">查看更多消息</span>
                         </div>
                         <div v-if="index==0" class="oldest-time-area">
-                            <span class="oldest-time">{{formatDate(message.createtime)}}</span>
+                            <span class="oldest-time">{{formatDate(message.ts)}}</span>
                         </div>
-                        <div v-if="index>0 && messages[index].createtime-messages[index-1].createtime > internalMills" class="oldest-time-area">
-                            <span class="oldest-time">{{formatDate(message.createtime)}}</span>
+                        <div v-if="index>0 && messages[index].ts-messages[index-1].ts > internalMills" class="oldest-time-area">
+                            <span class="oldest-time">{{formatDate(message.ts)}}</span>
                         </div>
                         <div class="img-msg" v-if="message.sendId==user.userId">
                             <a class="myself"><img v-bind:src="user.imgUrl"></a>
@@ -75,9 +75,9 @@
     import msgBuilder from '../../../common/message_builder'
     import dispatcher from '../../dispatcher'
     import fs from 'fs'
-    import moment from 'moment'
     import lodash from 'lodash'
     import {remote} from 'electron'
+    import func from '../../util/func'
 
     const client = remote.getGlobal('sharedObject').client
 
@@ -86,7 +86,6 @@
         computed: mapState({
             messages: 'messages',
             conversationMap: 'conversationMap',
-            conversations: 'conversations',
             chatPerson: 'chatPerson',
             user: 'user',
 
@@ -135,6 +134,8 @@
                     // vm.flash()
                 }
             }
+            if(this.conversationMap[this.chatPerson.userId])
+                this.showMoreFlag = !this.conversationMap[this.chatPerson.userId].scrollEnd
         },
         methods: {
             sendMsg: function () {
@@ -143,7 +144,7 @@
                     let data = fs.readFileSync(filepath, 'binary')
                     let chatMsg = {
                         userId: this.user.userId,
-                        destId: this.chatPerson.destId,
+                        destId: this.chatPerson.userId,
                         content: Buffer.from(data, 'binary'),
                         dataType: message_pb.CPrivateChat.DataType.IMG,
                         extName: filepath.substring(filepath.lastIndexOf('\.') + 1)
@@ -151,12 +152,13 @@
                     let bytes = msgBuilder.chatMessage(chatMsg)
                     client.conn.write(bytes)
                 }
-                if (!this.message2send || !this.chatPerson.destId)
+                if (!this.message2send || !this.chatPerson.userId)
                     return
                 let chatMsg = {
                     userId: this.user.userId,
-                    destId: this.chatPerson.destId,
+                    destId: this.chatPerson.userId,
                     content: this.message2send,
+                    conversationId: this.conversationMap[this.chatPerson.userId].conversationId,
                     dataType: message_pb.CPrivateChat.DataType.TXT
                 }
                 let bytes = msgBuilder.chatMessage(chatMsg)
@@ -190,75 +192,66 @@
                 });
             },
             scrollEvent: lodash.debounce(function(){
-                if (document.getElementById("chat-area").scrollTop <= 5 && !this.conversationMap[this.chatPerson.destId].scrollEnd) {
+                if (document.getElementById("chat-area").scrollTop <= 5 && !this.conversationMap[this.chatPerson.userId].scrollEnd) {
                     this.showMore()
                 }
             }, 500),
             showMore() {
-                let conversation = {'destId': this.chatPerson.destId, 'msgId': this.messages[0].msgId}
-                this.showMoreFlag = !this.conversationMap[conversation.destId].scrollEnd
-                let path = '/msg/historymessage/' + client.user.userId + '/' + conversation.destId + '/' + conversation.msgId + '/' + 20 + '?' + 'direct=-1'
+                if(!this.showMoreFlag) {
+                    return
+                }
+                let conversation = this.conversationMap[this.chatPerson.userId];
+                let path = '/msg/messages?userId=' + client.user.userId + '&conversationId='
+                    + conversation.conversationId+'&msgId='+this.messages[0].msgId+'&self=0'
                 axios.get(path).then(res => {
                     let data = res.data
                     if (data == null || data.length == 0) {
-                        this.conversationMap[conversation.destId].scrollEnd = true
+                        conversation.scrollEnd = true
+                        this.showMoreFlag = false
                     } else {
                         let r = data.reverse()
-                        let m = this.conversationMap[conversation.destId].messages = r.concat(this.conversationMap[conversation.destId].messages)
+                        let m = conversation.messages = r.concat(conversation.messages)
                         this.$store.commit('showMessage', m)
                     }
-                    this.showMoreFlag = !this.conversationMap[conversation.destId].scrollEnd
+                    this.$store.commit('conversationMap', this.conversationMap)
                 })
             },
             updateConversation(msg, sendToMe) {
                 let destId = sendToMe ? msg.sendId : msg.destId
                 let i=0
-                for(i in this.conversations) {
-                    if(this.conversations[i].destId === destId){
+                let conversations = this.user.conversations
+                for(i in conversations) {
+                    if(conversations[i].userId === destId){
                         if(sendToMe) {
-                            this.conversations[i].unreadCount += 1
-                            if(destId === this.chatPerson.destId) {
+                            conversations[i].unreadCount += 1
+                            if(destId === this.chatPerson.userId) {
                                 this.notifyRead(this.conversations[i])
                             }
                         }
-                        let conversation = this.conversations[i]
+                        let conversation = conversations[i]
                         conversation.msgId = msg.msgId
                         conversation.lastMsg = msg.content
-                        conversation.lastDate = this.formatDate(msg.createtime)
+                        conversation.lastDate = msg.createtime
                         break
                     }
                 }
                 if(i > 0) {
-                    let temp = this.conversations[i]
-                    this.conversations[i] = this.conversations[0]
-                    this.conversations[0] = temp
+                    let temp = conversations[i]
+                    conversations[i] = conversations[0]
+                    conversations[0] = temp
                 }
                 this.$store.commit('selectConversation', 0)
             },
             notifyRead(conversation) {
-                let path = '/msg/notifyReaded?userId=' + this.user.userId + '&destId=' + this.chatPerson.destId
+                let path = '/msg/notifyReaded?userId=' + this.user.userId + '&destId=' + this.chatPerson.userId
                 if (conversation.unreadCount && conversation.unreadCount > 0) {
                     axios.get(path)
                     conversation.unreadCount = 0
                 }
             },
-            formatDate: function (c) {
-                let curM = moment(c), copyM = moment(c)
-                let now = moment().startOf('d')
-                let diffNum = now.diff(copyM.startOf('d'), 'd')
-                let format
-                switch (diffNum) {
-                    case 0:
-                        format = curM.format('HH:mm')
-                        break
-                    case 1:
-                        format = '昨天 ' + curM.format('HH:mm')
-                        break
-                    default:
-                        format = curM.format('YYYY年MM月DD日 HH:mm')
-                }
-                return format
-            },
+            formatDate(c) {
+                return func.formatDate(c)
+            }
 
         }
 

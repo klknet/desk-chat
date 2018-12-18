@@ -26,8 +26,7 @@
     import {mapState} from 'vuex'
     import axios from '../../common/request'
     import {remote} from 'electron'
-    import pinyin from 'js-pinyin'
-    import lodash from 'lodash'
+    import func from './../util/func'
 
 
     const client = remote.getGlobal('sharedObject').client
@@ -49,7 +48,7 @@
             }
         },
         created: function () {
-            this.$router.push(link[0])
+            console.log('nav-left')
             this.userProfile()
         },
         methods: {
@@ -63,10 +62,19 @@
             userProfile() {
                 let url = 'user/profile?userId=' + client.user.userId
                 axios.get(url).then(res => {
-                    res.data.friends.forEach(f => f.firstLetter = pinyin.getCamelChars(f.notename).charAt(0))
-                    let groupFriend = lodash.groupBy(res.data.friends, friend => friend['firstLetter'])
-                    res.data.groupFriend = groupFriend
+                    func.groupFriend(res.data)
+                    console.log('asyn-nav-left')
+                    let conversationMap = {}
+                    for (let i in res.data.conversations) {
+                        let conv = res.data.conversations[i]
+                        let info = conversationMap[conv.userId] = {}
+                        Object.assign(info, conv)
+                        info.messages = []//缓存当前会话历史消息，最多20条
+                        info.scrollEnd = false
+                    }
                     this.$store.commit('userProfile', res.data)
+                    this.$store.commit('conversationMap', conversationMap)
+                    this.$router.push(link[0])
                 })
             }
         },

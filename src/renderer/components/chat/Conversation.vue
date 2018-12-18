@@ -9,7 +9,7 @@
         <div class="conversations non-drag">
             <ul>
                 <li v-for="(conversation, index) in user.conversations" @click="clickConversationWin(conversation, index)"
-                    v-bind:class="{active: selectIndex===index}">
+                    v-bind:class="{active: conversationIndex===index}">
                     <div>
                         <input type="hidden" :value="conversation.destId">
                         <input type="hidden" :value="conversation.msgId">
@@ -55,7 +55,7 @@
                 conversationMap: 'conversationMap',
                 chatPerson: 'chatPerson',
                 user: 'user',
-                selectIndex: 'selectIndex'
+                conversationIndex: 'conversationIndex'
             }),
         },
         data() {
@@ -65,12 +65,13 @@
         methods: {
             //点击会话窗口
             clickConversationWin(conversation, index) {
-                // if(this.selectIndex == index)
-                //     return
                 this.$store.commit('selectConversation', index)
                 this.$store.commit('chatPerson', conversation)
-                document.getElementById('sendArea').focus()
+                // document.getElementById('sendArea').focus()
                 this.notifyRead(conversation)
+                if(!conversation.msgId) {
+                    return
+                }
                 if (!this.conversationMap[conversation.userId] ||this.conversationMap[conversation.userId].messages.length == 0) {
                     let path = '/msg/messages?userId=' + client.user.userId + '&conversationId=' +
                         conversation.conversationId+'&msgId='+conversation.msgId+"&self=1"
@@ -78,17 +79,13 @@
                         let data = res.data
                         if (data == null || data == []) {
                             this.conversationMap[conversation.userId].scrollEnd = true
-
                         } else {
                             let messages = this.conversationMap[conversation.userId].messages = data.reverse()
-                            this.$store.commit('showMessage', messages)
                         }
                         this.$store.commit('conversationMap', this.conversationMap)
                     })
                 }
-                else {
-                    this.$store.commit('showMessage', this.conversationMap[conversation.userId].messages)
-                }
+
             },
             notifyRead(conversation) {
                 let path = '/msg/notifyReaded?userId=' + this.user.userId + '&destId=' + this.chatPerson.userId

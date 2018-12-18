@@ -39,7 +39,8 @@
     export default {
         name: 'nav-left',
         computed: mapState({
-            user: state => state.user
+            user: state => state.user,
+            navIndex: 'navIndex'
         }),
         data() {
             return {
@@ -48,22 +49,20 @@
             }
         },
         created: function () {
-            console.log('nav-left')
             this.userProfile()
         },
         methods: {
             format(m, i) {
-                return "static/img/" + m[i == this.p ? 0 : 1] + ".png"
+                return "static/img/" + m[i == this.navIndex ? 0 : 1] + ".png"
             },
             select(i) {
-                this.p = i
+                this.$store.commit('selectNav', i)
                 this.$router.push(link[i])
             },
             userProfile() {
                 let url = 'user/profile?userId=' + client.user.userId
                 axios.get(url).then(res => {
                     func.groupFriend(res.data)
-                    console.log('asyn-nav-left')
                     let conversationMap = {}
                     for (let i in res.data.conversations) {
                         let conv = res.data.conversations[i]

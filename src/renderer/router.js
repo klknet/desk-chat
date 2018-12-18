@@ -14,7 +14,7 @@ const routes = [
         path: '/contacts', name: 'contacts', component: Contacts,
         children: [
             {
-                path:'friend-info/:index',
+                path:'friend-info/:userId',
                 component: FriendInfo
             },
             {
@@ -27,7 +27,14 @@ const routes = [
 ]
 
 const router = new VueRouter({
-    routes
+    routes,
+    scrollBehavior (to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition
+        } else {
+            return { x: 0, y: 0 }
+        }
+    }
 })
 
 export default router

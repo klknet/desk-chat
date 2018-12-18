@@ -26,7 +26,7 @@
                     </div>
                     <div class="group-content">
                         <ul>
-                            <li v-for="(friend, index) in value" @click="select(map[friend.userId], index)"
+                            <li v-for="(friend, index) in value" @click="select(map[friend.userId], friend.userId)"
                                 :class="{active: s === map[friend.userId]}">
                                 <img :src="friend.imgUrl" class="avatar"/>
                                 <span class="notation">{{friend.notename}}</span>
@@ -69,13 +69,13 @@
             }
         },
         methods: {
-            select(curI, index) {
+            select(curI, userId) {
                 this.s = curI
-                if(index >= 0) {
-                    this.$router.push({path:'/contacts/friend-info/'+index})
+                if(userId) {
+                    this.$router.push({path:'/contacts/friend-info/'+userId})
                 }
                 else if(index === this.newFriendKey){
-                    this.$router.push({path:'/contacts/new-friend/'+index})
+                    this.$router.push({path:'/contacts/new-friend/'})
                 }
             }
         }

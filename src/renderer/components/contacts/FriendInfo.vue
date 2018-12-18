@@ -49,6 +49,7 @@
         name: 'friend-info',
         computed: mapState({
             user: 'user',
+            navIndex: 'navIndex'
         }),
         data() {
             return {
@@ -56,16 +57,24 @@
             }
         },
         created() {
-            this.friend = this.user.friends[this.$route.params.index]
+            for(let f of this.user.friends) {
+                if(f.userId === this.$route.params.userId) {
+                    this.friend = f
+                    break
+                }
+            }
         },
         methods: {
             sendMessage() {
                 let userId = this.friend.userId
                 for(let i in this.user.conversations) {
-                    if(this.user.conversations[i].userId == userId)
-                    console.log('已存在的会话')
-                    this.$router.push({name:'chat'})
-                    return
+                    if(this.user.conversations[i].userId == userId) {
+                        console.log('已存在的会话')
+                        this.$store.commit('selectNav', 0)
+                        this.$store.commit('selectConversation', parseInt(i))
+                        this.$router.push({name:'chat'})
+                        return
+                    }
                 }
                 let data = new FormData()
                 data.set('userId', this.user.userId)
@@ -74,6 +83,7 @@
                     {headers: { 'Content-Type': 'application/x-www-form-urlencoded' }}).then(res => {
                     func.groupFriend(res.data)
                     this.$store.commit('userProfile', res.data)
+                    this.$router.push({name:'chat'})
                 })
             }
         }

@@ -14,13 +14,15 @@
                         <div v-if="index==0" class="oldest-time-area">
                             <span class="oldest-time">{{formatDate(message.ts)}}</span>
                         </div>
-                        <div v-if="index>0 && messages[index].ts-messages[index-1].ts > internalMills" class="oldest-time-area">
+                        <div v-if="index>0 && messages[index].ts-messages[index-1].ts > internalMills"
+                             class="oldest-time-area">
                             <span class="oldest-time">{{formatDate(message.ts)}}</span>
                         </div>
                         <div class="img-msg" v-if="message.sendId==user.userId">
                             <a class="myself"><img v-bind:src="user.imgUrl"></a>
                             <div v-if="message.msgType==3">
-                                <a class="myself-content" @click="imageEnlarge($event, message.destId)"><img :src="imgPrefix+'/'+message.content"></a>
+                                <a class="myself-content" @click="imageEnlarge($event, message.destId)"><img
+                                        :src="imgPrefix+'/'+message.content"></a>
                             </div>
                             <div v-if="message.msgType==0">
                                 <span class="myself">{{message.content}}</span>
@@ -29,7 +31,8 @@
                         <div class="img-msg" v-else>
                             <a class="other-person"><img v-bind:src="chatPerson.imgUrl"></a>
                             <div v-if="message.msgType==3">
-                                <a class="other-person-content" @click="imageEnlarge($event, message.destId)"><img :src="imgPrefix+'/'+message.content"></a>
+                                <a class="other-person-content" @click="imageEnlarge($event, message.destId)"><img
+                                        :src="imgPrefix+'/'+message.content"></a>
                             </div>
                             <div v-if="message.msgType==0">
                                 <span class="other-person">{{message.content}}</span>
@@ -46,10 +49,11 @@
                             <img @click="propFile" src="static/img/file.png">
                         </span>
                         <span class="menu-item videa-chat">
-                            <img  src="static/img/video.png">
+                            <img src="static/img/video.png">
                         </span>
                     </div>
-                    <div class="content" @keydown.delete="clearMsg" @paste.prevent="pasteImg" v-on:keydown.enter.prevent="sendMsg">
+                    <div class="content" @keydown.delete="clearMsg" @paste.prevent="pasteImg"
+                         v-on:keydown.enter.prevent="sendMsg">
                         <div class="img-area">
                             <ul>
                                 <li v-for="filepath in filepaths">
@@ -83,16 +87,24 @@
 
     export default {
         name: 'chat-area',
-        computed: mapState({
-            messages: 'messages',
-            conversationMap: 'conversationMap',
-            chatPerson: 'chatPerson',
-            user: 'user',
-
-        }),
+        computed: {
+            ...mapState({
+                conversationMap: 'conversationMap',
+                chatPerson: 'chatPerson',
+                user: 'user',
+                messages: state => {
+                    if(!state.chatPerson.userId)
+                        return []
+                    return state.conversationMap[state.chatPerson.userId].messages
+                },
+                showMoreFlag: state => {
+                    return !state.conversationMap[state.chatPerson.userId].scrollEnd
+                }
+            }),
+        },
         watch: {
             messages() {
-                this.$nextTick(()=>{
+                this.$nextTick(() => {
                     let chatArea = document.getElementById('chat-area')
                     chatArea.scrollTop = chatArea.scrollHeight;
                 })
@@ -104,10 +116,9 @@
                 internalMills: 5 * 60 * 1000,
                 filepaths: [],
                 message2send: '',
-                showMoreFlag: true
             }
         },
-        created: function() {
+        created: function () {
             dispatcher.processChat = response => {
                 let chat = response.getChat()
                 let decoder = new TextDecoder('utf8')
@@ -134,8 +145,6 @@
                     // vm.flash()
                 }
             }
-            if(this.conversationMap[this.chatPerson.userId])
-                this.showMoreFlag = !this.conversationMap[this.chatPerson.userId].scrollEnd
         },
         methods: {
             sendMsg: function () {
@@ -177,7 +186,7 @@
             imageEnlarge: function () {
 
             },
-            propFile: function(){
+            propFile: function () {
                 let that = this
                 remote.dialog.showOpenDialog(remote.getCurrentWindow(), {
                     filters: [
@@ -191,40 +200,38 @@
                     document.getElementById('sendArea').focus()
                 });
             },
-            scrollEvent: lodash.debounce(function(){
+            scrollEvent: lodash.debounce(function () {
                 if (document.getElementById("chat-area").scrollTop <= 5 && !this.conversationMap[this.chatPerson.userId].scrollEnd) {
                     this.showMore()
                 }
             }, 500),
             showMore() {
-                if(!this.showMoreFlag) {
+                if (!this.showMoreFlag || this.messages.length == 0) {
                     return
                 }
                 let conversation = this.conversationMap[this.chatPerson.userId];
                 let path = '/msg/messages?userId=' + client.user.userId + '&conversationId='
-                    + conversation.conversationId+'&msgId='+this.messages[0].msgId+'&self=0'
+                    + conversation.conversationId + '&msgId=' + this.messages[0].msgId + '&self=0'
                 axios.get(path).then(res => {
                     let data = res.data
                     if (data == null || data.length == 0) {
                         conversation.scrollEnd = true
-                        this.showMoreFlag = false
                     } else {
                         let r = data.reverse()
                         let m = conversation.messages = r.concat(conversation.messages)
-                        this.$store.commit('showMessage', m)
                     }
                     this.$store.commit('conversationMap', this.conversationMap)
                 })
             },
             updateConversation(msg, sendToMe) {
                 let destId = sendToMe ? msg.sendId : msg.destId
-                let i=0
+                let i = 0
                 let conversations = this.user.conversations
-                for(i in conversations) {
-                    if(conversations[i].userId === destId){
-                        if(sendToMe) {
+                for (i in conversations) {
+                    if (conversations[i].userId === destId) {
+                        if (sendToMe) {
                             conversations[i].unreadCount += 1
-                            if(destId === this.chatPerson.userId) {
+                            if (destId === this.chatPerson.userId) {
                                 this.notifyRead(this.conversations[i])
                             }
                         }
@@ -235,7 +242,7 @@
                         break
                     }
                 }
-                if(i > 0) {
+                if (i > 0) {
                     let temp = conversations[i]
                     conversations[i] = conversations[0]
                     conversations[0] = temp

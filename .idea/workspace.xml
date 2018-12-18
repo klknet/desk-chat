@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a51c38a6-f147-4465-9490-478f97b3098f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/settings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/NavLeft.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/NavLeft.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/chat/ChatArea.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/chat/ChatArea.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/chat/Conversation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/chat/Conversation.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/contacts/Contacts.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/contacts/Contacts.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/components/contacts/FriendInfo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/contacts/FriendInfo.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/store/index.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/dist/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -51,7 +43,7 @@
           <entry key="css" value="163" />
           <entry key="js" value="469" />
           <entry key="json" value="6" />
-          <entry key="vue" value="7511" />
+          <entry key="vue" value="7542" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
@@ -59,7 +51,7 @@
           <entry key="CSS" value="163" />
           <entry key="JSON" value="6" />
           <entry key="JavaScript" value="469" />
-          <entry key="Vue.js" value="7511" />
+          <entry key="Vue.js" value="7542" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.lifecycle.project">
@@ -98,11 +90,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/renderer/components/chat/ChatArea.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="257">
-              <caret line="95" column="72" selection-start-line="95" selection-start-column="72" selection-end-line="95" selection-end-column="72" />
+            <state relative-caret-position="333">
+              <caret line="99" column="40" lean-forward="true" selection-start-line="99" selection-start-column="40" selection-end-line="99" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -119,8 +111,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/renderer/components/chat/Conversation.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-646">
-              <caret line="11" column="56" selection-start-line="11" selection-start-column="56" selection-end-line="11" selection-end-column="56" />
+            <state relative-caret-position="152">
+              <caret line="68" column="62" lean-forward="true" selection-start-line="68" selection-start-column="16" selection-end-line="68" selection-end-column="62" />
               <folding>
                 <element signature="e#1897#1940#0" expanded="true" />
               </folding>
@@ -131,8 +123,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/renderer/store/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="33" selection-start-line="33" selection-end-line="33" />
+            <state relative-caret-position="190">
+              <caret line="13" column="25" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="25" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -140,11 +132,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/renderer/components/contacts/FriendInfo.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="163">
-              <caret line="73" column="70" lean-forward="true" selection-start-line="73" selection-start-column="70" selection-end-line="73" selection-end-column="70" />
+            <state relative-caret-position="144">
+              <caret line="72" column="58" lean-forward="true" selection-start-line="72" selection-start-column="58" selection-end-line="72" selection-end-column="58" />
               <folding>
                 <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="e#1610#1639#0" expanded="true" />
@@ -205,9 +197,9 @@
         <option value="$PROJECT_DIR$/src/renderer/components/contacts/Contacts.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/chat/Conversation.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/NavLeft.vue" />
-        <option value="$PROJECT_DIR$/src/renderer/components/contacts/FriendInfo.vue" />
         <option value="$PROJECT_DIR$/src/renderer/store/index.js" />
         <option value="$PROJECT_DIR$/src/renderer/components/chat/ChatArea.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/components/contacts/FriendInfo.vue" />
       </list>
     </option>
   </component>
@@ -375,12 +367,12 @@
       <workItem from="1544364783614" duration="4937000" />
       <workItem from="1544517539135" duration="7256000" />
       <workItem from="1544582575282" duration="13262000" />
-      <workItem from="1544684036579" duration="67056000" />
+      <workItem from="1544684036579" duration="67328000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="81483000" />
+    <option name="totallyTimeSpent" value="81755000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -590,26 +582,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/chat/Conversation.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-646">
-          <caret line="11" column="56" selection-start-line="11" selection-start-column="56" selection-end-line="11" selection-end-column="56" />
-          <folding>
-            <element signature="e#1897#1940#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/store/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="33" selection-start-line="33" selection-end-line="33" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/components/contacts/Contacts.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1346">
@@ -627,21 +599,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/contacts/FriendInfo.vue">
+    <entry file="file://$PROJECT_DIR$/src/renderer/store/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="73" column="70" lean-forward="true" selection-start-line="73" selection-start-column="70" selection-end-line="73" selection-end-column="70" />
+        <state relative-caret-position="190">
+          <caret line="13" column="25" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="25" />
           <folding>
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#1610#1639#0" expanded="true" />
+            <element signature="e#0#21#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/components/chat/ChatArea.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="95" column="72" selection-start-line="95" selection-start-column="72" selection-end-line="95" selection-end-column="72" />
+        <state relative-caret-position="333">
+          <caret line="99" column="40" lean-forward="true" selection-start-line="99" selection-start-column="40" selection-end-line="99" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/chat/Conversation.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="68" column="62" lean-forward="true" selection-start-line="68" selection-start-column="16" selection-end-line="68" selection-end-column="62" />
+          <folding>
+            <element signature="e#1897#1940#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/contacts/FriendInfo.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="72" column="58" lean-forward="true" selection-start-line="72" selection-start-column="58" selection-end-line="72" selection-end-column="58" />
+          <folding>
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#1610#1639#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

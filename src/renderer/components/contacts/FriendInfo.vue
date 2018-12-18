@@ -72,6 +72,7 @@
                         console.log('已存在的会话')
                         this.$store.commit('selectNav', 0)
                         this.$store.commit('selectConversation', parseInt(i))
+                        this.$store.commit('chatPerson', this.user.conversations[i])
                         this.$router.push({name:'chat'})
                         return
                     }

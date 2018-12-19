@@ -12,3 +12,6 @@ thumbs.db
 vcs.xml
 workspace.xml
 .idea/*
+package-lock.json
+yarn.lock
+.idea/

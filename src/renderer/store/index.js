@@ -13,6 +13,7 @@ const store = new vuex.Store({
         chatPerson: {},//聊天对象
         conversationIndex: -1,//会话选中索引
         navIndex: 0, //导航选中索引
+        friendIndex: -1//朋友索引
     },
     mutations: {
         userProfile(state, user) {
@@ -34,6 +35,9 @@ const store = new vuex.Store({
         },
         selectNav(state, i) {
             state.navIndex = i
+        },
+        selectFriend(state, i) {
+            state.friendIndex = i
         }
     }
 })

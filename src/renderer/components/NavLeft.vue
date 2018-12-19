@@ -67,7 +67,7 @@
                     for (let i in res.data.conversations) {
                         let conv = res.data.conversations[i]
                         let info = conversationMap[conv.userId] = {}
-                        Object.assign(info, conv)
+                        info.conversation = conv
                         info.messages = []//缓存当前会话历史消息，最多20条
                         info.scrollEnd = false
                     }

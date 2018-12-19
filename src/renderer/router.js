@@ -14,11 +14,11 @@ const routes = [
         path: '/contacts', name: 'contacts', component: Contacts,
         children: [
             {
-                path:'friend-info/:userId',
+                path:'friend-info',
                 component: FriendInfo
             },
             {
-                path:'new-friend/:key',
+                path:'new-friend',
                 component: NewFriend
             }
         ]

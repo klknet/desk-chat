@@ -93,7 +93,7 @@
                 chatPerson: 'chatPerson',
                 user: 'user',
                 messages: state => {
-                    if(!state.chatPerson.userId)
+                    if(!state.chatPerson.userId || !state.conversationMap[state.chatPerson.userId])
                         return []
                     return state.conversationMap[state.chatPerson.userId].messages
                 },
@@ -104,10 +104,7 @@
         },
         watch: {
             messages() {
-                this.$nextTick(() => {
-                    let chatArea = document.getElementById('chat-area')
-                    chatArea.scrollTop = chatArea.scrollHeight;
-                })
+                this.scrollEnd()
             }
         },
         data() {
@@ -167,7 +164,7 @@
                     userId: this.user.userId,
                     destId: this.chatPerson.userId,
                     content: this.message2send,
-                    conversationId: this.conversationMap[this.chatPerson.userId].conversationId,
+                    conversationId: this.conversationMap[this.chatPerson.userId].conversation.conversationId,
                     dataType: message_pb.CPrivateChat.DataType.TXT
                 }
                 let bytes = msgBuilder.chatMessage(chatMsg)
@@ -209,16 +206,16 @@
                 if (!this.showMoreFlag || this.messages.length == 0) {
                     return
                 }
-                let conversation = this.conversationMap[this.chatPerson.userId];
+                let conversationObj = this.conversationMap[this.chatPerson.userId];
                 let path = '/msg/messages?userId=' + client.user.userId + '&conversationId='
-                    + conversation.conversationId + '&msgId=' + this.messages[0].msgId + '&self=0'
+                    + conversationObj.conversation.conversationId + '&msgId=' + this.messages[0].msgId + '&self=0'
                 axios.get(path).then(res => {
                     let data = res.data
                     if (data == null || data.length == 0) {
-                        conversation.scrollEnd = true
+                        conversationObj.scrollEnd = true
                     } else {
                         let r = data.reverse()
-                        let m = conversation.messages = r.concat(conversation.messages)
+                        conversationObj.messages = r.concat(conversationObj.messages)
                     }
                     this.$store.commit('conversationMap', this.conversationMap)
                 })
@@ -232,7 +229,7 @@
                         if (sendToMe) {
                             conversations[i].unreadCount += 1
                             if (destId === this.chatPerson.userId) {
-                                this.notifyRead(this.conversations[i])
+                                this.notifyRead(conversations[i])
                             }
                         }
                         let conversation = conversations[i]
@@ -258,6 +255,12 @@
             },
             formatDate(c) {
                 return func.formatDate(c)
+            },
+            scrollEnd() {
+                this.$nextTick(() => {
+                    let chatArea = document.getElementById('chat-area')
+                    chatArea.scrollTop = chatArea.scrollHeight;
+                })
             }
 
         }

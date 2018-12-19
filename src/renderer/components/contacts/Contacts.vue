@@ -1,10 +1,12 @@
 <template>
     <div>
         <div class="median drag" id="contacts">
-            <div class="search">
-                <i class="fa fa-search non-drag"></i>
-                <input class="non-drag" id="search-input" type="text" placeholder=""/>
-                <span class="add-friend non-drag">+</span>
+            <div class="search non-drag">
+                <div>
+                    <i class="fa fa-search"></i>
+                    <input class="search-input" type="text" placeholder="搜索"/>
+                    <span class="add-friend">+</span>
+                </div>
             </div>
             <div class="friend non-drag">
                 <div class="contact-group">
@@ -69,13 +71,17 @@
             }
         },
         methods: {
-            select(curI, userId) {
+            select(curI, key) {
                 this.s = curI
-                if(userId) {
-                    this.$router.push({path:'/contacts/friend-info/'+userId})
-                }
-                else if(index === this.newFriendKey){
+                if(key === this.newFriendKey){
                     this.$router.push({path:'/contacts/new-friend/'})
+                    return
+                }
+                for(let i in this.user.friends) {
+                    if(key === this.user.friends[i].userId) {
+                        this.$store.commit('selectFriend', i)
+                        this.$router.push({path:'/contacts/friend-info'})
+                    }
                 }
             }
         }
@@ -97,7 +103,7 @@
     }
 
     .friend .first {
-        font-size: 0.8em;
+        font-size: 0.7em;
         font-weight: 600;
     }
 
@@ -121,6 +127,10 @@
 
     .friend .avatar {
         width: 35px;
+    }
+
+    .friend .notation{
+        padding-left: 8px;
     }
 
 

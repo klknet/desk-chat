@@ -49,20 +49,19 @@
         name: 'friend-info',
         computed: mapState({
             user: 'user',
-            navIndex: 'navIndex'
+            navIndex: 'navIndex',
+            friend: state => {
+                if(state.friendIndex == -1)
+                    return {}
+                return state.user.friends[state.friendIndex]
+            }
         }),
         data() {
             return {
-                friend: {}
             }
         },
         created() {
-            for(let f of this.user.friends) {
-                if(f.userId === this.$route.params.userId) {
-                    this.friend = f
-                    break
-                }
-            }
+
         },
         methods: {
             sendMessage() {
@@ -133,7 +132,6 @@
     }
 
     .friend-info .detail-value {
-        font-weight: 600;
     }
 
     .info-chunk .info-send {

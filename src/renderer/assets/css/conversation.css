@@ -65,3 +65,23 @@
 .conversations li.active {
     background-color: #BCBDBE;
 }
+
+.conv-menu {
+    background-color: #ffffff;
+    width: 150px;
+    font-size: 12px;
+    font-weight: 500;
+    position: absolute;
+    display: none;
+    z-index: 999;
+}
+
+.conv-menu .divider {
+    border-top: solid 1px #e7e7e7;
+}
+.conv-menu li {
+    padding: 5px 20px;
+}
+.conv-menu li:hover{
+    background-color: #DFDDDB;
+}

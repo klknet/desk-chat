@@ -33,14 +33,12 @@ const client = {
         }
     },
     init: function () {
-        console.log('init')
-        let that = this
         if (!this.conn) {
             this.conn = new net.Socket()
         }
-        this.conn.connect(this.chat_port, this.host, function () {
+        this.conn.connect(this.chat_port, this.host, () => {
             console.log("connection to server")
-            that.ping()
+            this.ping()
         })
     }
 }

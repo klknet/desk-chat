@@ -57,6 +57,7 @@ app.on('activate', () => {
 })
 
 ipcMain.on('index-show', function () {
+    win.loginWin.webContents.send('close-login-win')
     //这个宽高度就是微信的宽度和高度850，580
     win.mainWin = new BrowserWindow({width:850, height: 580, autoHideMenuBar: true, frame:false})
     let indexWin = win.mainWin
@@ -68,7 +69,7 @@ ipcMain.on('index-show', function () {
         client.close()
         win.mainWin = null
     })
-    win.loginWin.close()
+
 })
 
 global.sharedObject = {

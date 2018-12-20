@@ -3,6 +3,7 @@ import message_pb from '../common/message_pb'
 
 let client = electron.remote.getGlobal('sharedObject').client
 
+console.log('client init', new Date().getTime())
 client.conn.on("data", function (bytes) {
     let message = message_pb.ProtocolMessage.deserializeBinary(bytes)
     let response = message.getResponse()

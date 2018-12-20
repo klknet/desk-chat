@@ -105,6 +105,9 @@
         watch: {
             messages() {
                 this.scrollEnd()
+            },
+            chatPerson() {
+                this.scrollEnd()
             }
         },
         data() {
@@ -116,6 +119,7 @@
             }
         },
         created: function () {
+            // console.log(dispatcher.processLogin)
             dispatcher.processChat = response => {
                 let chat = response.getChat()
                 let decoder = new TextDecoder('utf8')

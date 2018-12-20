@@ -37,29 +37,34 @@
             {text: '孔令凯', value: '18062743820', pwd: 'konglk'},
             {text: '秦田', value: '18062742155', pwd: 'qintian'},
             {text: '毛毛', value: '18510396861', pwd: 'maomao'},
-            // {text: '点点', value: '13477907301', pwd: 'diandian'}
         ]
     }
 
-    dispatcher.processLogin = response => {
-        console.log('login process')
-        let resp = response.getResp();
-        if (resp.getCode() == 200) {
-            client.user.userId = resp.getUserid()
-            client.user.certificate = resp.getCertificate()
-            client.user.username = modelData.userId
-            client.user.pwd = modelData.pwd
-            client.loginFlag = true
-            electron.ipcRenderer.send('index-show')
-        }else {
-            electron.remote.dialog.showErrorBox('error', '用户名密码错误')
-        }
-    }
+    electron.ipcRenderer.on('close-login-win', function () {
+        dispatcher.processLogin = (res) => console.log('login')
+        electron.remote.getCurrentWindow().close()
+    })
 
     export default {
         name: 'login-page',
         data: function() {
             return modelData
+        },
+        created() {
+            dispatcher.processLogin = response => {
+                console.log('login process')
+                let resp = response.getResp();
+                if (resp.getCode() == 200) {
+                    client.user.userId = resp.getUserid()
+                    client.user.certificate = resp.getCertificate()
+                    client.user.username = modelData.userId
+                    client.user.pwd = modelData.pwd
+                    client.loginFlag = true
+                    electron.ipcRenderer.send('index-show')
+                }else {
+                    electron.remote.dialog.showErrorBox('error', '用户名密码错误')
+                }
+            }
         },
         methods: {
             login: function () {

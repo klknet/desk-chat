@@ -52,6 +52,9 @@
         computed: mapState({
             user: 'user',
         }),
+        /*
+        初始化列表索引
+         */
         created() {
             let li_index = 0
             this.map[this.newFriendKey] = li_index++

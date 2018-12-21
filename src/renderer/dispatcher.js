@@ -28,7 +28,7 @@ const dispatcher = {
         console.log('dispatcher process login')
     },
     processPong(res) {
-        console.log('pong')
+        // console.log('pong')
     }
 }
 

@@ -63,16 +63,7 @@
                 let url = 'user/profile?userId=' + client.user.userId
                 axios.get(url).then(res => {
                     func.groupFriend(res.data)
-                    let conversationMap = {}
-                    for (let i in res.data.conversations) {
-                        let conv = res.data.conversations[i]
-                        let info = conversationMap[conv.userId] = {}
-                        info.conversation = conv
-                        info.messages = []//缓存当前会话历史消息，最多20条
-                        info.scrollEnd = false
-                    }
-                    this.$store.commit('userProfile', res.data)
-                    this.$store.commit('conversationMap', conversationMap)
+                    func.processConversation(res.data, this)
                     this.$router.push(link[0])
                 })
             }

@@ -104,7 +104,7 @@
                         conversation.conversationId+'&msgId='+conversation.msgId+"&self=1"
                     axios.get(path).then(res => {
                         let data = res.data
-                        if (data == null || data == []) {
+                        if (data == null || data.length == 0) {
                             this.conversationMap[conversation.userId].scrollEnd = true
                         } else {
                             let messages = this.conversationMap[conversation.userId].messages = data.reverse()
@@ -128,9 +128,7 @@
                 return func.formatDate(c)
             },
             conversationMenu(index, e) {
-                console.log('right click ', index)
                 this.deleteIndex = index
-                console.log(e.clientX, e.clientY)
                 this.menuStyle = {
                     left: e.clientX+'px',
                     top: e.clientY+'px',
@@ -143,6 +141,7 @@
                     axios.get("/conversation/delete?userId="+this.user.userId+'&conversationId='+conv.conversationId).then(res => {
                         func.groupFriend(res.data)
                         this.$store.commit('userProfile', res.data)
+                        this.$store.commit('chatPerson', {})
                         this.hideMenu()
                     })
                 }

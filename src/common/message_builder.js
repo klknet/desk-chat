@@ -28,7 +28,7 @@ let msg_builder = {
         let req = new message_pb.ProtocolMessage.TRequest()
         req.setReqtype(message_pb.ProtocolMessage.RequestType.CHAT)
         let chat = new message_pb.CPrivateChat()
-        chat.setMsgid(uuid.v1())
+        // chat.setMsgid(uuid.v1())
         chat.setContent(Buffer.from(chatMsg.content))
         chat.setDestid(chatMsg.destId)
         chat.setUserid(chatMsg.userId)

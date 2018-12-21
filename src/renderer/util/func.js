@@ -32,5 +32,20 @@ export default {
         }
         return format
     },
-
+    /*
+    process会话
+     */
+    processConversation(user, vm) {
+        let conversations = user.conversations
+        let conversationMap = {}
+        for (let i in conversations) {
+            let conv = conversations[i]
+            let info = conversationMap[conv.userId] = {}
+            info.conversation = conv
+            info.messages = []//缓存当前会话历史消息，最多20条
+            info.scrollEnd = false
+        }
+        vm.$store.commit('userProfile', user)
+        vm.$store.commit('conversationMap', conversationMap)
+    }
 }

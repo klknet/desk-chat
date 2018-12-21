@@ -1,6 +1,7 @@
 import msgBuilder from '../common/message_builder'
 import config from '../config/settings'
 import net from 'net'
+import message_pb from "../common/message_pb";
 
 const client = {
     user: {
@@ -40,7 +41,7 @@ const client = {
             console.log("connection to server")
             this.ping()
         })
-    }
+    },
 }
 
 export default client;

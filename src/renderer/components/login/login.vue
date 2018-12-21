@@ -42,7 +42,9 @@
 
     electron.ipcRenderer.on('close-login-win', function () {
         dispatcher.processLogin = (res) => console.log('login')
-        electron.remote.getCurrentWindow().close()
+        var win = electron.remote.getCurrentWindow()
+        win.webContents.closeDevTools()
+        win.hide()
     })
 
     export default {

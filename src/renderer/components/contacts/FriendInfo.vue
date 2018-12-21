@@ -44,6 +44,7 @@
     import {mapState} from 'vuex'
     import axios from '../../../common/request'
     import func from './../../util/func'
+    import qs from 'qs'
 
     export default {
         name: 'friend-info',
@@ -76,12 +77,19 @@
                         return
                     }
                 }
-                let data = new FormData()
-                data.set('userId', this.user.userId)
-                data.set('destId', userId)
-                axios.post('conversation/create', data,
+                let data ={
+                    userId: this.user.userId,
+                    destId: userId
+                }
+                axios.post('conversation/create', qs.stringify(data),
                     {headers: { 'Content-Type': 'application/x-www-form-urlencoded' }}).then(res => {
                     func.groupFriend(res.data)
+                    for(let i in res.data.conversations) {
+                        if(res.data.conversations[i].userId === userId) {
+                            this.$store.commit('selectConversation', parseInt(i))
+                        }
+                    }
+                    this.$store.commit('selectNav', 0)
                     this.$store.commit('userProfile', res.data)
                     this.$router.push({name:'chat'})
                 })

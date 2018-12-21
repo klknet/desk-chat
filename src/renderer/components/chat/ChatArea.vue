@@ -77,11 +77,11 @@
     import {mapState} from 'vuex'
     import message_pb from '../../../common/message_pb'
     import msgBuilder from '../../../common/message_builder'
-    import dispatcher from '../../dispatcher'
     import fs from 'fs'
     import lodash from 'lodash'
     import {remote} from 'electron'
     import func from '../../util/func'
+    import dispatcher from "../../dispatcher";
 
     const client = remote.getGlobal('sharedObject').client
 
@@ -119,8 +119,8 @@
             }
         },
         created: function () {
-            // console.log(dispatcher.processLogin)
             dispatcher.processChat = response => {
+                console.log('process chat')
                 let chat = response.getChat()
                 let decoder = new TextDecoder('utf8')
                 let m = {
@@ -130,20 +130,28 @@
                     "createtime": chat.getTs(),
                     "msgId": chat.getMsgid(),
                     "msgType": chat.getDatatype()
-
                 }
                 let sendToMe = m.sendId != client.user.userId  //是否是别人发给我的消息
                 let destId = sendToMe ? m.sendId : m.destId
-                let recMsg = this.conversationMap[destId].messages
-                //每个会话只缓存100条消息
-                while (recMsg.length > 99) {
-                    recMsg.shift()
-                }
-                recMsg.push(m)
-                //有新消息时更新会话列表，不用请求服务器
-                this.updateConversation(m, sendToMe)
-                if (sendToMe) {
-                    // vm.flash()
+                if(this.conversationMap[destId]) {
+                    let recMsg = this.conversationMap[destId].messages
+                    //每个会话只缓存100条消息
+                    while (recMsg.length > 99) {
+                        recMsg.shift()
+                    }
+                    recMsg.push(m)
+                    //有新消息时更新会话列表，不用请求服务器
+                    this.updateConversation(m, sendToMe)
+                    if (sendToMe) {
+                        // vm.flash()
+                    }
+                }else {
+                    let url = 'user/profile?userId=' + client.user.userId
+                    axios.get(url).then(res => {
+                        func.groupFriend(res.data)
+                        func.processConversation(res.data, this)
+                        this.$router.push('chat')
+                    })
                 }
             }
         },
@@ -207,7 +215,7 @@
                 }
             }, 500),
             showMore() {
-                if (!this.showMoreFlag || this.messages.length == 0) {
+                if (!this.showMoreFlag || this.messages.length == 0 || !this.messages[0].msgId) {
                     return
                 }
                 let conversationObj = this.conversationMap[this.chatPerson.userId];
@@ -237,7 +245,6 @@
                             }
                         }
                         let conversation = conversations[i]
-                        conversation.msgId = msg.msgId
                         conversation.lastMsg = msg.content
                         conversation.lastDate = msg.createtime
                         break

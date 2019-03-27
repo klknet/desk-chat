@@ -27,9 +27,10 @@
 <script>
     import msgBuilder from '../../../common/message_builder'
     import electron from 'electron'
-    import dispatcher from '../../dispatcher'
-
     let client = electron.remote.getGlobal('sharedObject').client
+
+
+
     let modelData = {
         userId: '18062743820',
         pwd: 'konglk',
@@ -41,11 +42,28 @@
     }
 
     electron.ipcRenderer.on('close-login-win', function () {
-        dispatcher.processLogin = (res) => console.log('login')
+        // dispatcher.processLogin = (res) => console.log('login')
         var win = electron.remote.getCurrentWindow()
         win.webContents.closeDevTools()
         win.hide()
     })
+
+    client.conn.onmessage = function (e) {
+        var response = JSON.parse(e.data)
+        switch (response.type) {
+            case 0:
+                break;
+            case 1:
+                if (response.code == 200) {
+                    client.loginFlag = true
+                    var user = JSON.parse(response.data)
+                    client.user = user
+                    electron.ipcRenderer.send('index-show')
+                }else {
+                    electron.remote.dialog.showErrorBox('error', response.message)
+                }
+        }
+    }
 
     export default {
         name: 'login-page',
@@ -53,26 +71,19 @@
             return modelData
         },
         created() {
-            dispatcher.processLogin = response => {
-                console.log('login process')
-                let resp = response.getResp();
-                if (resp.getCode() == 200) {
-                    client.user.userId = resp.getUserid()
-                    client.user.certificate = resp.getCertificate()
-                    client.user.username = modelData.userId
-                    client.user.pwd = modelData.pwd
-                    client.loginFlag = true
-                    electron.ipcRenderer.send('index-show')
-                }else {
-                    electron.remote.dialog.showErrorBox('error', '用户名密码错误')
-                }
-            }
         },
         methods: {
             login: function () {
-                console.log('login')
-                let bytes = msgBuilder.loginMessage(this.userId, this.pwd)
-                client.conn.write(bytes)
+                var d = {
+                    unique: modelData.userId,
+                    pwd: Buffer.from('konglk'+modelData.pwd).toString("base64")
+                }
+                var req = {
+                    type: 1,
+                    data: JSON.stringify(d)
+                }
+                client.conn.send(JSON.stringify(req))
+
             }
         },
         watch: {

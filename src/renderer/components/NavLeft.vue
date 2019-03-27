@@ -3,7 +3,7 @@
         <ul class="non-drag">
             <li>
                 <a>
-                    <img id="profile" :src="user.imgUrl">
+                    <img id="profile" :src="user.profileUrl">
                 </a>
             </li>
 
@@ -60,12 +60,14 @@
                 this.$router.push(link[i])
             },
             userProfile() {
-                let url = 'user/profile?userId=' + client.user.userId
-                axios.get(url).then(res => {
-                    func.groupFriend(res.data)
+                func.groupFriend(client.user)
+                this.$store.commit('userProfile', client.user)
+                var path = "/conversation/list?userId="+client.user.userId
+                axios.get(path).then(res => {
                     func.processConversation(res.data, this)
-                    this.$router.push(link[0])
                 })
+                this.$router.push(link[0])
+
             }
         },
     }

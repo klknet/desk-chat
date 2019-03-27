@@ -35,8 +35,7 @@ function createWindow() {
 
     win.loginWin.on('closed', () => {
         win.loginWin = null
-        if(!win.mainWin)
-            client.close()
+        // client.close()
     })
     client.init()
 
@@ -67,8 +66,10 @@ ipcMain.on('index-show', function () {
     indexWin.webContents.openDevTools()
     indexWin.on('closed', () => {
         client.close()
+        win.loginWin.close()
         win.mainWin = null
     })
+
 
 })
 

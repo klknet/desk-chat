@@ -3,9 +3,9 @@
         <div class="info-chunk non-drag top">
             <div>
                 <div>
-                    <span class="nickname">{{friend.nickname}}</span>
+                    <span class="nickname">{{friend.username}}</span>
                     <template v-if="friend.sex != undefined">
-                        <img class="sex" :src="friend.sex==0 ? 'static/img/female.png' : 'static/img/male.png'"/>
+                        <img class="sex" :src="friend.gender==0 ? 'static/img/female.png' : 'static/img/male.png'"/>
                     </template>
                 </div>
                 <div style="padding-top: 5px;">
@@ -13,14 +13,14 @@
                 </div>
             </div>
             <div>
-                <img class="info-img" :src="friend.imgUrl"/>
+                <img class="info-img" :src="friend.profileUrl"/>
             </div>
         </div>
         <div class="info-chunk non-drag">
             <div>
                 <div class="detail-row">
                     <span class="detail-title">备&nbsp;&nbsp;&nbsp;注</span>
-                    <span class="detail-value">{{friend.notename}}</span>
+                    <span class="detail-value">{{friend.remark}}</span>
                 </div>
                 <div class="detail-row">
                     <span class="detail-title">地&nbsp;&nbsp;&nbsp;区</span>
@@ -28,7 +28,7 @@
                 </div>
                 <div>
                     <span class="detail-title">聊天号</span>
-                    <span class="detail-value">{{friend.username}}</span>
+                    <span class="detail-value">{{friend.userId}}</span>
                 </div>
             </div>
         </div>

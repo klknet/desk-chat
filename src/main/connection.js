@@ -1,19 +1,10 @@
-import msgBuilder from '../common/message_builder'
-import config from '../config/settings'
-import net from 'net'
-import message_pb from "../common/message_pb";
+import WebSocket from 'ws'
+import electron from 'electron'
 
 const client = {
-    user: {
-        userId: '',
-        username: '',
-        pwd: '',
-        certificate: ''
-    },
-    conn: null,
+    user: {},
+    conn: new WebSocket("ws://localhost:8080/ims/ws/chat"),
     imgPrefix: 'http://39.106.133.40',
-    host: config.host,
-    chat_port: '8090',
     loginFlag: false,//登录标识
     ping: function () {
         let s = setInterval(send, 1000 * 15)
@@ -21,7 +12,7 @@ const client = {
 
         function send() {
             try {
-                that.conn.write(msgBuilder.pingMessage())
+                that.conn.send("ping")
             } catch (err) {
                 console.error(err)
                 clearInterval(s)
@@ -30,18 +21,30 @@ const client = {
     },
     close: function () {
         if (this.conn) {
-            this.conn.destroy()
+            this.conn.close()
         }
     },
     init: function () {
-        if (!this.conn) {
-            this.conn = new net.Socket()
-        }
-        this.conn.connect(this.chat_port, this.host, () => {
-            console.log("connection to server")
-            this.ping()
-        })
+
     },
+}
+
+client.conn.onopen = function (e) {
+    console.log("Connected to websocket server")
+    var ping = {
+        type: 0,
+        data: 'ping'
+    }
+    client.conn.send(JSON.stringify(ping))
+    setInterval(()=>client.conn.send(JSON.stringify(ping)), 1000*15)
+}
+
+client.conn.onclose = function (e) {
+    console.log("Disconnected")
+}
+client.conn.onerror = function (e) {
+    console.log("Error eccured")
+    
 }
 
 export default client;

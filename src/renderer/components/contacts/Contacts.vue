@@ -30,8 +30,8 @@
                         <ul>
                             <li v-for="(friend, index) in value" @click="select(map[friend.userId], friend.userId)"
                                 :class="{active: s === map[friend.userId]}">
-                                <img :src="friend.imgUrl" class="avatar"/>
-                                <span class="notation">{{friend.notename}}</span>
+                                <img :src="friend.profileUrl" class="avatar"/>
+                                <span class="notation">{{friend.remark}}</span>
                             </li>
                         </ul>
                     </div>

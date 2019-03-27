@@ -7,7 +7,7 @@ export default {
     将好友按拼音首字母分组
      */
     groupFriend(user) {
-        user.friends.forEach(f => f.firstLetter = pinyin.getCamelChars(f.notename).charAt(0))
+        user.friends.forEach(f => f.firstLetter = pinyin.getCamelChars(f.remark).charAt(0))
         let groupFriend = lodash.groupBy(user.friends, friend => friend['firstLetter'])
         user.groupFriend = groupFriend
     },
@@ -35,17 +35,16 @@ export default {
     /*
     process会话
      */
-    processConversation(user, vm) {
-        let conversations = user.conversations
+    processConversation(conversations, vm) {
         let conversationMap = {}
         for (let i in conversations) {
             let conv = conversations[i]
-            let info = conversationMap[conv.userId] = {}
+            let info = conversationMap[conv.destId] = {}
             info.conversation = conv
             info.messages = []//缓存当前会话历史消息，最多20条
             info.scrollEnd = false
         }
-        vm.$store.commit('userProfile', user)
+        console.log(conversationMap)
         vm.$store.commit('conversationMap', conversationMap)
     }
 }

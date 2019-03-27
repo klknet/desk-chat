@@ -10,15 +10,16 @@
         <!--会话列表-->
         <div class="conversations non-drag">
             <ul>
-                <li v-for="(conversation, index) in user.conversations"
+                <li v-for="(conversation, index) in conversationMap"
                     @click="clickConversationWin(conversation, index)"
                     v-bind:class="{active: conversationIndex===index}"
                     @contextmenu="conversationMenu(index, $event)">
+                    {{conversation}}
                     <div>
                         <input type="hidden" :value="conversation.destId">
-                        <input type="hidden" :value="conversation.msgId">
+                        <input type="hidden" :value="conversation.conversationId">
                         <span>
-                            <img v-bind:src="conversation.imgUrl">
+                            <img v-bind:src="conversation.profileUrl">
                             <a><span style="display: none;"
                                      v-bind:class="{badge: showBadge(conversation)}">
                                 {{conversation.unreadCount>99?'99+':conversation.unreadCount}}
@@ -26,7 +27,7 @@
                         </span>
                         <span>
                             <span class="nickname">{{conversation.notename}}</span>
-                            <span class="last-date">{{formatDate(conversation.lastDate)}}</span>
+                            <span class="last-date">{{formatDate(conversation.updateTime)}}</span>
                             <span class="last-msg">
                                 <template v-if="conversation.msgType === null">
                                 </template>
